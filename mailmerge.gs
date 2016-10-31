@@ -1,3 +1,5 @@
+// Google Script - Mail Merge - Dynamic Subject & Email Content
+
 function onOpen () {
   var ui = SpreadsheetApp.getUi()
   ui.createMenu('Gmail Mail Merge')
@@ -82,7 +84,12 @@ function main () {
         return row[columns[label]]
       })
 
-      MailApp.sendEmail(email, subject, plainBody, {
+      var customSubject =  = subject.replace(labelRegex, function (k) {
+        var label = k.substring(2, k.length - 2)
+        return row[columns[label]]
+      })
+
+      MailApp.sendEmail(email, customSubject, plainBody, {
         htmlBody: htmlBody
       })
 
